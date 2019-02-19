@@ -1,0 +1,146 @@
+﻿<!--El nombre de 65 caracteres, igual que la dirección, el email, el password y el teléfono.
+La dirección tiene que tener más de 5 caracteres y menos de 65 caracteres.
+El EMail debe de ser válido.
+El Password, debe de ser fuerte.
+El teléfono (es el único que no es requerido)
+La ciudad (nos han comentado que se repite muy a menudo, las ciudades de Madrid, Barcelona y Sevilla.
+
+------------------------------------------------------------
+El otro trozo será los datos sociales.
+Pagina de facebook personal.
+Página de twitter personal.
+Edad: Rango de 18 a 99.
+Plato Favorito:
+	Primeros:
+		Lentejas.
+		Garbanzos.
+		Sopa.
+		Judias.
+	Segundos:
+		San Jacobos.
+		Atún.
+		Sardina.
+	Postres:
+		Chocolate.
+		Nata Montada.
+
+Si la edad es mayor o igual que 18 y no hay telefono alertar de un error.
+-- Marcar que campos son obligatorios para validar el formulario,
+-- podeis usar html5 o javascript.-->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="StyleSheet1.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form id="formulario">
+
+        <fieldset>
+            <legend>Datos Personales</legend>
+            Nombre: <input name='nombre' type='text' tabindex='1' size="65" required="required"><br><br>
+            <!--Edad: <input id ='edad' name='edad' type='text' tabindex='1' size="65" required="required"><br><br>-->
+            Dirección: <input name='direccion' type='text' tabindex='2' size="65" pattern=".{3,}" required title="minimo 3 caracteres" maxlength="65"><br><br>
+            Email: <input name='email' type='email' tabindex='3' size="65" required="required"><br><br>
+            Password: <input name='direccion' type='text' tabindex='4' size="65" required="required" pattern="[a-zA-Z0-9]{5,}"><br><br>
+            Teléfono: <input id="telefono" name='telefono' type='text' tabindex='2'><br><br>
+            Ciudad: <input name='ciudad' list="ciudades" type='text' tabindex='2' required="required" autocomplete="on">
+            <datalist id="ciudades">
+                <option value="Madrid"></option>
+                <option value="barcelona"></option>
+                <option value="Sevilla"></option>
+            </datalist>
+
+        </fieldset>
+        <br><br>
+
+        <fieldset>
+            <legend>Datos Sociales</legend>
+            Página Facebook:    <input name='nombre' type='text' tabindex='20'><br><br>
+            Página de Twitter   <input name='nombre' type='text' tabindex='21' /><br><br>
+            Edad: <input type="range" id="edad" name="edad" value="edad" min="18" max="99" /><label id="valorEdad">Edad: 50</label><br><br>
+            Plato favorito:
+            <select id="platoFavorito" name="platoFavorito">
+                <optgroup label="Primeros">
+                    <option value="Lentejas">Lentejas</option>
+                    <option value="Garbanzos">garbanzos</option>
+                    <option value="Sopa">Sopa</option>
+                    <option value="Judias">Judias</option>
+                </optgroup>
+
+                <optgroup label="Segundos">
+                    <option value="San Jacobos">San Jacobos</option>
+                    <option value="Atún">Atún</option>
+                    <option value="Sardina">Sardina</option>
+                </optgroup>
+
+                <optgroup label="Postres">
+                    <option value="Chocolate">Chocolate</option>
+                    <option value="Nata Montada">Nata Montada</option>
+                </optgroup>
+
+            </select>
+        </fieldset>
+
+        <input id="boton" type="submit" value="Submit">
+
+    </form>
+    <span class="error"></span>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#formulario").submit(function () {
+                var anos = parseInt($("#edad").val());                             
+               
+
+                if (anos <= 18 && $("#telefono").val() == "") {
+                    alert("Si tienes menos de 18 tienes que tener un telefono");
+                    $(".error").text("Si tienes menos de 18 tienes que tener un telefono");
+                    return false;
+                }
+                else {
+                    error.innerHTML = "";
+                    return true;
+                }
+            });
+
+        
+        $("#edad").change(
+            function () {
+                var edad = parseInt($("#edad").val());
+                document.getElementById('valorEdad').innerHTML = "Edad: " + edad;
+            });
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>

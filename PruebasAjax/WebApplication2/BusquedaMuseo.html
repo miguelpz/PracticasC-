@@ -1,0 +1,127 @@
+﻿<!--Crear un html de la siguiente forma:
+un range para seleccionar el id del museo, va de 1 a 166.
+Una vez seleccionado, pulsaremos el botón Información.
+Una llamada AJAX se realizará pidiendo la información de dicho museo.
+En la parte inferior, un textarea, mostrará la descripción del museo y una
+caja de texto mostrará el título y ultima modificación.
+https://museowebapp.azurewebsites.net/api/MuseosAPI/
+
+El siguiente paso será crear una tabla en la que mostraremos, el id del museo y su título,
+esta tabla podrá ordenarse por id o por título.
+https://www.js-tutorials.com/jquery-tutorials/datatables-example-json-data-using-rest-webservice/-->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
+
+    <title></title>
+</head>
+
+
+<body>
+    <div class="container" style="padding:50px 250px;">
+        <h1 style=" text-align:center">Lista de Museos </h1>
+
+
+        <table id="museosTable" class="display" cellspacing="0" width="500">
+            <thead>
+                <tr>
+                    <th>Museo ID</th>
+                    <th>Título</th>
+                </tr>
+            </thead>
+        </table>
+        <div id="footer"></div>
+    </div>
+
+
+    <div class="container" style="padding:50px 250px;">
+        <h1 style=" text-align:center">Búsqueda de museos </h1>
+
+
+
+        <form id="formulario">
+
+            <input type="range" id="museoId" name="museoId" value="museoId" min="1" max="166" style="width:initial" /><br><br>
+            <label id="idLabel">Id: 50</label><br><br>
+            <input type="button" id="Boton" value="Informacion" /><br><br>
+        </form>
+
+        <input type="text" id="titulo" size="54" /><br /><br />
+        <textarea id="descripcion" rows="10" cols="50"></textarea>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var arrayReturn = [];
+
+            $.ajax({
+                url: "https://museowebapp.azurewebsites.net/api/MuseosAPI/",
+
+                dataType: 'json',
+                success: function (data) {
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        arrayReturn.push([data[i].id, data[i].titulo]);
+                    }
+                    console.log("Primero");
+                    console.log(arrayReturn);
+                    inittable(arrayReturn);
+
+                }
+            });
+            function inittable(data) {
+                //console.log(data);
+                $('#museosTable').DataTable({
+                    "aaData": data
+                });
+            }
+
+
+            $("#Boton").click(
+                function () {
+
+
+                    var idMuseo = $("#museoId").val();
+
+                    $.ajax({
+                        url: 'https://museowebapp.azurewebsites.net/api/MuseosAPI/' + idMuseo,
+                        success: function (respuesta) {
+                            console.log(respuesta);
+                            var ultimaModif = new Date(respuesta.ultimaModificacion);
+                            ultimaModif = ultimaModif.getDay() + "-" + ultimaModif.getMonth() + "-" + ultimaModif.getFullYear();
+                            console.log(ultimaModif);
+
+                            document.getElementById("titulo").value = respuesta.titulo + "  " + ultimaModif;
+                            document.getElementById("descripcion").innerHTML = respuesta.descripcion;
+                        },
+                        error: function () {
+                            document.getElementById("titulo").value = "No existe museo para este id: " + idMuseo;
+                            document.getElementById("descripcion").innerHTML = "No existe museo para este id: " + idMuseo;
+                        }
+                    });
+
+                    $("#museoId").change(
+                        function () {
+                            var id = parseInt($("#museoId").val());
+                            document.getElementById('idLabel').innerHTML = "Id: " + id;
+                        });
+                });
+
+        });
+    </script>
+
+
+</body>
+</html>

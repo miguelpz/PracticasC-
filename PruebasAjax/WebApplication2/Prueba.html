@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form id="formuNombre">
+        <input type="text" id="nombre" name="nombre" />
+        <input type="text" id="apellido" name="apellido" />
+        <input type="range" id="edad" name="edad" value="edad" min="0" max="99" />
+        <label id="valorEdad">Edad: 50</label>
+        <input type="button" id="Boton" value="prueba" />
+    </form>
+    
+    <div>
+        <ul id="listaNombres"></ul>
+    </div>
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Boton").click(
+                function () {
+                    var nombre = $("#nombre").val();
+                    var apellido = $("#apellido").val();
+                    var edad = parseInt($("#edad").val());
+                    if (edad >= 18) {
+                        $("#listaNombres").append("<li>" + nombre + " " + apellido + "</li>");
+                    }
+                    else {
+                        alert('Es menor de edad');
+                    }
+                });
+            $("#edad").change(
+                function () {
+                    var edad = parseInt($("#edad").val());
+                    document.getElementById('valorEdad').innerHTML = "edad: " + edad;
+                });
+        });
+    </script>
+
+</body>
+</html>
