@@ -111,22 +111,26 @@ namespace NodosDijkstra
             }
         }
               
-        public string ObtenerRuta (int nodoFinal)
+        public Path ObtenerRuta (int nodoFinal)
         {
            
             CorrerDijkstra();
 
-            string caminoResult = "";
+            Path resultado = new Path();
+
+
+
+            
 
             foreach (int i in caminoRecorrido)
             {
-                caminoResult += i.ToString();
+                resultado.Camino.Add(i);
                 if (i == nodoFinal) break;              
             }
 
-            int distancia = D[nodoFinal];
+            resultado.Distancia = D[nodoFinal];
 
-            return JsonConvert.SerializeObject(new { Camino = caminoResult, Distancia = distancia });
+            return resultado;
 
 
 

@@ -8,7 +8,7 @@ namespace NodosDijkstra
 {
     public class RutaService
     {
-        public string ObtenerRutaMasCorta (int[,] Matriz, int nodoInicial, int nodoFinal)
+        public Path ObtenerRutaMasCorta (int[,] Matriz, int nodoInicial, int nodoFinal)
         {
 
             int rango = (int)Math.Sqrt(Matriz.Length);

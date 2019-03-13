@@ -18,7 +18,7 @@ namespace NodosDijkstra
             //RutaService rs = new RutaService();
 
 
-            //string resultado = rs.ObtenerRutaMasCorta(matrizAdyacencia, 3, 7);
+            //Path resultado = rs.ObtenerRutaMasCorta(matrizAdyacencia, 0, 7);
 
             Path pathInicial = new Path();
             pathInicial.Camino.Add(0);

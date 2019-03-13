@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodosDijkstra", "NodosDijkstra\NodosDijkstra.csproj", "{AF85F4B5-3D78-4FCC-9677-2B4B29013413}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteoDijkstra", "TesteoDijkstra\TesteoDijkstra.csproj", "{EAFB84C6-4D01-4E1F-8406-012D9F70ABFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AF85F4B5-3D78-4FCC-9677-2B4B29013413}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF85F4B5-3D78-4FCC-9677-2B4B29013413}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF85F4B5-3D78-4FCC-9677-2B4B29013413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAFB84C6-4D01-4E1F-8406-012D9F70ABFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAFB84C6-4D01-4E1F-8406-012D9F70ABFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAFB84C6-4D01-4E1F-8406-012D9F70ABFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAFB84C6-4D01-4E1F-8406-012D9F70ABFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
