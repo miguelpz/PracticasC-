@@ -15,23 +15,52 @@ namespace TesteoDijkstra
                                         { -1, 6 , -1, -1, -1, 8, -1, 7 }, { -1, -1, -1, -1, 5, 16, 7, -1} };
 
         [TestMethod]
-        public void TestMethod1()
+        public Path BaseMetodoTest(int nodoInicial, int nodoFinal)
+        {           
+            int rango = (int)Math.Sqrt(matrizAdyacencia.Length);                             
+            return new Dijkstra(rango, matrizAdyacencia, nodoInicial).ObtenerRuta(nodoFinal);          
+        }
+
+        [TestMethod]
+        public void Secuencia01Test()
         {
-            // Arrange
-            int rango = (int)Math.Sqrt(matrizAdyacencia.Length);
-            int nodoInicial = 0;
-            int nodoFinal = 7;
-           
-            // Act
-            Path resultado;
-            resultado= new Dijkstra(rango, matrizAdyacencia, nodoInicial).ObtenerRuta(nodoFinal);
-          
-            // Assert
-            int[] correctSecuence = { 0, 3, 2, 1, 5, 6, 4, 7 };          
+            Path resultado = BaseMetodoTest(0, 7);
+            int[] correctSecuence = { 0, 3, 2, 1, 5, 4, 7 };
             Assert.IsTrue(resultado.Camino.ToArray().SequenceEqual(correctSecuence) && resultado.Distancia == 23);
         }
 
+        [TestMethod]
+        public void Secuencia02Test()
+        {
+            Path resultado = BaseMetodoTest(0, 6);
+            int[] correctSecuence = { 0, 3, 2, 1, 6 };
+            Assert.IsTrue(resultado.Camino.ToArray().SequenceEqual(correctSecuence) && resultado.Distancia == 17);
+        }
 
-        
+        [TestMethod]
+        public void Secuencia03Test()
+        {
+            Path resultado = BaseMetodoTest(1, 7);
+            int[] correctSecuence = { 1,5,4,7 };
+            Assert.IsTrue(resultado.Camino.ToArray().SequenceEqual(correctSecuence) && resultado.Distancia == 12);
+        }
+
+        [TestMethod]
+        public void Secuencia04Test()
+        {
+            Path resultado = BaseMetodoTest(2, 4);
+            int[] correctSecuence = { 2,1,5,4 };
+            Assert.IsTrue(resultado.Camino.ToArray().SequenceEqual(correctSecuence) && resultado.Distancia == 9);
+        }
+
+        [TestMethod]
+        public void Secuencia05Test()
+        {
+            Path resultado = BaseMetodoTest(4, 7);
+            int[] correctSecuence = { 4, 7 };
+            Assert.IsTrue(resultado.Camino.ToArray().SequenceEqual(correctSecuence) && resultado.Distancia == 5);
+        }
+
+
     }
 }

@@ -27,7 +27,7 @@ namespace NodosDijkstra
 
 
 
-            Path resultado = nodicos.IniciarAlgoritmo(7, pathInicial);
+            //Path resultado = nodicos.IniciarAlgoritmo(7, pathInicial);
 
 
         }

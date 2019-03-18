@@ -11,25 +11,21 @@ namespace NodosDijkstra
         private int[,] L;   //matriz de adyacencia
         public int[] C;    //arreglo de nodos
         public int[] D;    //arreglo de distancias
-        public List<int> caminoRecorrido;
+        public int[] DP;   //arreglo complementario a distancias para almacenar provinencias       
         private int trango = 0;
         public int nodoInicial;
-        
-
+                
         public Dijkstra(int paramRango, int[,] paramArreglo, int nodoInicial)
         {
-            
             L = new int[paramRango, paramRango];
             C = new int[paramRango];
             D = new int[paramRango];
-            caminoRecorrido = new List<int>();
+            DP = new int[paramRango];
+            
             rango = paramRango;
 
             this.nodoInicial = nodoInicial;
-
-            caminoRecorrido.Add(nodoInicial);
-
-
+                              
             // Copiar la matriz de adyacencias que viene por parámetro.
             for (int i = 0; i < rango; i++)
             {
@@ -45,24 +41,17 @@ namespace NodosDijkstra
                 C[i] = i;
                 
             }
-
-            //// Descartar los nodos anteriores al inicial para iniciar desde alli las averiguaciones.
-            //for (int x = 0; x < NodoInicial+1; x++)
-            //{
-            //    C[x] = -1;
-            //}
-
+          
             C[nodoInicial] = -1;
 
             // La situacion actual de distancias en el vector de distancias, correspondientes al nodo inicial. 
             for (int i = 0; i < rango; i++)
             {
                 D[i] = L[nodoInicial, i];
-
+                DP[i] = nodoInicial;
             }
+
             D[nodoInicial] = 0;
-
-
         }
 
         
@@ -88,8 +77,7 @@ namespace NodosDijkstra
 
             C[minNodo] = -1;
             // REGISTRAMOS DISTANCIAS EN EL VECTOR DE DISTANCIAS
-            caminoRecorrido.Add(minNodo); // Registro del numero de nodo que asume la menor distancia  y es a partir del cual examinos los caminos a los que accede.
-
+            
             for (int i = 0; i < rango; i++)
             {
                 if (L[minNodo, i] < 0) // Tomando nodo minimo averiguado a ver a que nodos conduce en matriz adyacencia.
@@ -98,54 +86,46 @@ namespace NodosDijkstra
                 if (D[i] < 0)  // si no hay peso asignado
                 {
                     D[i] = minValor + L[minNodo, i];  // como evalumos a parrtir del minimo nodo hay que sumar lo que ha cosado llegar con este.
-
+                    DP[i] = minNodo;
                     continue;
                 }
 
                 if ((D[minNodo] + L[minNodo, i]) < D[i])
                 { // Solo actualizar distancia siempre que la averguada(minima + el peso que hay) sea inferior ala que hay.
                     D[i] = minValor + L[minNodo, i];
+                    DP[i]= minNodo;
                     
-
+                    
                 }
             }
         }
-              
+
+        // Usaremos el registro paralelo a D DP. En D se guardaban las distancias mas cortas y en DP de donde provenian.
+        // Para obtener ruta se va hacia atrás tilizando el registro DP.
         public Path ObtenerRuta (int nodoFinal)
         {
            
             CorrerDijkstra();
 
             Path resultado = new Path();
-
-
-
             
+            int siguiente = nodoFinal;
 
-            foreach (int i in caminoRecorrido)
+            resultado.Camino.Add(nodoFinal);
+
+            do
             {
-                resultado.Camino.Add(i);
-                if (i == nodoFinal) break;              
-            }
+                siguiente = DP[siguiente];
+                resultado.Camino.Add(siguiente);
+
+            } while (siguiente !=nodoInicial);
 
             resultado.Distancia = D[nodoFinal];
 
+            resultado.Camino.Reverse();
+
             return resultado;
-
-
-
-            
-           
-
-
-            
-
-
-
-
         }
-
-
         
         //Funcion de implementacion del algoritmo
         public void CorrerDijkstra()

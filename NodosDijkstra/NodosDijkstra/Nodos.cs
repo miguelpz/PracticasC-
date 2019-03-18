@@ -59,6 +59,8 @@ namespace NodosDijkstra
 
             }
 
+
+
             return listaPath.Where(o => o.Camino.Last() == nodoFinal && o.Distancia ==
                         listaPath.Where(o2 => o2.Camino.Last() == nodoFinal).Select(o2 => o2.Distancia).Min()).FirstOrDefault();
 
